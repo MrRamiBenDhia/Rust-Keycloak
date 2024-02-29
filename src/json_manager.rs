@@ -32,12 +32,15 @@
         let reader = io::BufReader::new(file);
         serde_json::from_reader(reader).map_err(|e| Box::new(e) as Box<dyn std::error::Error>)
     }
-    //AI
+
     pub fn print_json_file_contents(filename: &str) {
         match read_json_from_file(filename) {
             Ok(v) => {
+                let content = serde_json::to_string_pretty(&v).unwrap();
                 println!("Contents of {}:", filename);
-                println!("{}", serde_json::to_string_pretty(&v).unwrap());
+                println!("{}", content);
+                println!("REALM !!!!!! {}", v["realm"]);
+                println!("roles !!!!!! {}", v["roles"]["client"]);
             }
             Err(e) => println!("Error reading JSON file {}: {}", filename, e),
         }
@@ -54,6 +57,7 @@
         json_data
     }
 
+    //AI
     pub fn save_json_to_file(json_data: &Value, filename: &str) -> std::result::Result<(), io::Error> {
         let mut file = File::create(filename)?;
         file.write_all(
