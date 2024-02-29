@@ -1,0 +1,61 @@
+{
+  "id": 6922,
+  "realm": "HAHAHAH",
+  "jaweha bahy": true,
+  "roles": {
+    "realm": [
+      {
+        "id": "2734e6b7-70eb-4310-b18c-b9079846547b",
+        "name": "offline_access",
+        "description": "${role_offline-access}",
+        "composite": false,
+        "clientRole": false,
+        "containerId": "172c5b3a-41e8-4746-87a3-f97ed1f6b119",
+        "attributes": {}
+      },
+      {
+        "id": "32938641-1c02-46ff-ab41-b9a1fcbecfb5",
+        "name": "default-roles-test",
+        "description": "${role_default-roles}",
+        "composite": true,
+        "composites": {
+          "realm": [
+            "offline_access",
+            "uma_authorization"
+          ],
+          "client": {
+            "account": [
+              "manage-account",
+              "view-profile"
+            ]
+          }
+        },
+        "clientRole": false,
+        "containerId": "172c5b3a-41e8-4746-87a3-f97ed1f6b119",
+        "attributes": {}
+      },
+      {
+        "id": "7a8f3093-af11-47e7-8265-96291f5ae26d",
+        "name": "uma_authorization",
+        "description": "${role_uma_authorization}",
+        "composite": false,
+        "clientRole": false,
+        "containerId": "172c5b3a-41e8-4746-87a3-f97ed1f6b119",
+        "attributes": {}
+      }
+    ],
+    "client": {
+      "realm-management": [
+        {
+          "id": "91763104-5b18-4dc3-a785-831905509de9",
+          "name": "manage-clients",
+          "description": "${role_manage-clients}",
+          "composite": false,
+          "clientRole": true,
+          "containerId": "db94816e-f30d-4831-98b3-8f9c6b2d2571",
+          "attributes": {}
+        }
+      ]
+    }
+  }
+}
