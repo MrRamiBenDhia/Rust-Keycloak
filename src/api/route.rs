@@ -6,10 +6,10 @@ use axum::{
 };
 
 use crate::{
-    handler::{
-        create_note_handler, delete_note_handler, edit_note_handler, get_note_handler,
-        health_check_handler, note_list_handler,
-    },
+    api::handler::{
+            create_note_handler, delete_note_handler, edit_note_handler, get_note_handler,
+            health_check_handler, note_list_handler,
+        },
     AppState,
 };
 

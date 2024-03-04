@@ -1,7 +1,9 @@
-mod handler;
-mod model;
-mod route;
-mod schema;
+pub mod api {
+    mod handler;
+    mod model;
+    pub(crate) mod route;
+    mod schema;
+}
 
 use std::sync::Arc;
 
@@ -12,7 +14,7 @@ use tokio::net::TcpListener;
 
 use sqlx::mysql::{MySqlPool, MySqlPoolOptions};
 
-use route::create_router;
+use api::route::create_router;
 use tower_http::cors::{Any, CorsLayer};
 
 pub struct AppState {
