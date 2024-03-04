@@ -18,8 +18,8 @@ fn main() {
             print_person_info(&v);
 
             let new_json_data = create_and_print_json();
-            save_json_to_file(&new_json_data, "output.json").unwrap();
-            print_json_file_contents("input.json");
+            save_json_to_file(&new_json_data, "misc/output.json").unwrap();
+            print_json_file_contents("misc/input.json");
         }
         Err(e) => println!("Error parsing JSON: {}", e),
     }
