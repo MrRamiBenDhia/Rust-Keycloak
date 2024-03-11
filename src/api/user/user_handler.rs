@@ -1,15 +1,13 @@
-
 use std::sync::Arc;
-
 use axum::{
     extract::{Path, Json, State},
     http::StatusCode,
     response::IntoResponse,
 };
+// mod csv_manager;
 
 use crate::{
-    api::user::user_schema::{CreateUserSchema, UpdateUserSchema},
-    AppState,
+    api::user::user_schema::{CreateUserSchema, UpdateUserSchema}, csv::csv_manager::csv_manager::csv_read, AppState
 };
 
 use super::user_model::UserModelResponse;
@@ -26,9 +24,24 @@ pub async fn user_list_handler(State(data): State<Arc<AppState>>) -> Result<impl
     // Placeholder for demonstration
     let users: Vec<UserModelResponse> = Vec::new();
 
+    let mut temp = Vec::new();
+   
+    match csv_read("misc/MOCK_DATA.csv") {
+        Ok(records) => {
+            temp = records.clone();
+            for record in records {
+                println!("{:?}", record);
+            }
+        }
+        Err(err) => {
+            eprintln!("Error: {:?}", err);
+        }
+    }
+    
     let json_response = serde_json::json!({
-        "status": "ok",
+        "status": "okyyyyyy",
         "users": users,
+        "temp": temp,
     });
 
     Ok(Json(json_response))

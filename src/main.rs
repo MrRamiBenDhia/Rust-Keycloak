@@ -14,6 +14,9 @@ pub mod api {
     }
 }
 
+pub mod csv{
+    pub mod csv_manager;
+}
 
 use std::sync::Arc;
 
@@ -25,9 +28,9 @@ use tokio::net::TcpListener;
 use sqlx::mysql::{MySqlPool, MySqlPoolOptions};
 
 use api::{
-    user::user_router::create_router as create_user_router,
     realm::realm_router::create_router as create_realm_router,
     // client::client_router::create_router as create_client_router,
+    user::user_router::create_router as create_user_router,
 };
 
 use tower_http::cors::{Any, CorsLayer};
@@ -67,13 +70,14 @@ async fn main() {
         .allow_origin(Any)
         .allow_headers([CONTENT_TYPE]);
 
-    // let user_router = create_user_router(Arc::new(AppState { db: pool.clone() })).layer(cors);
     // let client_router = create_client_router(Arc::new(AppState { db: pool.clone() })).layer(cors);
-    let realm_router = create_realm_router(Arc::new(AppState { db: pool.clone() })).layer(cors);
+    let realm_router = create_realm_router(Arc::new(AppState { db: pool.clone() })).layer(cors.clone());
+    let user_router = create_user_router(Arc::new(AppState { db: pool.clone() })).layer(cors.clone());
 
     let app = axum::Router::new()
-    .nest("/realm", realm_router);
-        // .nest("/user", user_router);
+        .nest("/realm", realm_router)
+        .nest("/user", user_router);
+        // .layer(cors);
 
     println!("✅ Server started successfully at 0.0.0.0:8000");
 
