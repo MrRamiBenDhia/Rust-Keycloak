@@ -1,11 +1,19 @@
 pub mod api {
-    pub(crate) mod note {
-        mod note_handler;
-        mod note_model;
-        pub(crate) mod note_route;
-        mod note_schema;
+    pub(crate) mod user {
+        mod user_handler;
+        mod user_model;
+        pub(crate) mod user_router;
+        mod user_schema;
+    }
+
+    pub(crate) mod realm {
+        mod realm_handler;
+        mod realm_model;
+        pub(crate) mod realm_router;
+        mod realm_schema;
     }
 }
+
 
 use std::sync::Arc;
 
@@ -16,7 +24,12 @@ use tokio::net::TcpListener;
 
 use sqlx::mysql::{MySqlPool, MySqlPoolOptions};
 
-use api::note::note_route::create_router;
+use api::{
+    user::user_router::create_router as create_user_router,
+    realm::realm_router::create_router as create_realm_router,
+    // client::client_router::create_router as create_client_router,
+};
+
 use tower_http::cors::{Any, CorsLayer};
 
 pub struct AppState {
@@ -29,6 +42,11 @@ async fn main() {
     println!("🌟 REST API Service 🌟");
 
     let database_url = std::env::var("DATABASE_URL").expect("DATABASE_URL must set");
+
+    println!("~~~~~~~~~~");
+    println!("{}", database_url);
+    println!("~~~~~~~~~~");
+
     let pool = match MySqlPoolOptions::new()
         .max_connections(10)
         .connect(&database_url)
@@ -49,11 +67,17 @@ async fn main() {
         .allow_origin(Any)
         .allow_headers([CONTENT_TYPE]);
 
-    let app = create_router(Arc::new(AppState { db: pool.clone() })).layer(cors);
+    // let user_router = create_user_router(Arc::new(AppState { db: pool.clone() })).layer(cors);
+    // let client_router = create_client_router(Arc::new(AppState { db: pool.clone() })).layer(cors);
+    let realm_router = create_realm_router(Arc::new(AppState { db: pool.clone() })).layer(cors);
 
-    println!("✅ Server started successfully at 0.0.0.0:8080");
+    let app = axum::Router::new()
+    .nest("/realm", realm_router);
+        // .nest("/user", user_router);
 
-    let listener = TcpListener::bind("0.0.0.0:8080").await.unwrap();
+    println!("✅ Server started successfully at 0.0.0.0:8000");
+
+    let listener = TcpListener::bind("0.0.0.0:8000").await.unwrap();
     axum::serve(listener, app.into_make_service())
         .await
         .unwrap();
