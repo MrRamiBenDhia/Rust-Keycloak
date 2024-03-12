@@ -1,0 +1,101 @@
+id,name,description,enabled,verify_email,remember_me
+1,Regrant,"Repair Left Upper Femur, External Approach",false,false,false
+2,It,"Replacement of R Renal Vein with Nonaut Sub, Open Approach",true,true,true
+3,Duobam,"Insert of Infusion Dev into R Com Iliac Vein, Perc Approach",true,true,true
+4,Bytecard,"Insertion of Int Fix into L Tibia, Open Approach",true,true,false
+5,Transcof,"Supplement Right Knee Joint with Synth Sub, Perc Approach",true,true,false
+6,Tempsoft,"Supplement L Tympanic Membrane with Autol Sub, Via Opening",true,false,false
+7,Fixflex,"Revision of Spacer in R Acromioclav Jt, Perc Approach",true,false,true
+8,Sonsing,"Insertion of Int Fix into R Metatarsal, Perc Endo Approach",true,true,false
+9,Tres-Zap,"Supplement R Carpal Jt with Nonaut Sub, Perc Endo Approach",false,true,false
+10,Quo Lux,"Replace R Cephalic Vein w Synth Sub, Perc Endo",false,false,true
+11,Ventosanzap,"Supplement R Hip Tendon with Autol Sub, Perc Endo Approach",false,false,true
+12,Gembucket,"Dilate Gastric Art, Bifurc, w 2 Drug-elut, Open",true,false,false
+13,Biodex,"Drainage of Right Tarsal, Percutaneous Approach, Diagnostic",false,true,true
+14,Latlux,CT Scan of Bi Verteb Art using Intravasc Optic Cohere,false,false,true
+15,Konklux,"Bypass Low Esophag to Stomach w Autol Sub, Perc Endo",true,true,true
+16,Sonair,"Bypass Abdominal Aorta to R Ext Ilia, Perc Endo Approach",false,true,false
+17,Latlux,"Bypass 3 Cor Art from R Int Mammary w Autol Art, Open",true,true,true
+18,Cardify,"Supplement L Ankle Tendon with Autol Sub, Perc Endo Approach",true,false,true
+19,Fix San,"Insertion of Infusion Dev into R Verteb Art, Perc Approach",false,true,true
+20,Zontrax,"Revision of Drainage Device in L Carpal Jt, Extern Approach",true,true,true
+21,Zoolab,"Revision of Ext Fix in R Hip Jt, Open Approach",true,false,false
+22,Sonsing,"Reattachment of Right Ankle Tendon, Perc Endo Approach",false,true,false
+23,Cardguard,"Revise Synth Sub in L Finger Phalanx Jt, Perc Endo",true,true,false
+24,Bitchip,"Repair Right Face Vein, Percutaneous Approach",true,false,false
+25,Tampflex,"Supplement R Glenoid Cav with Autol Sub, Perc Endo Approach",false,false,true
+26,Cardguard,"Bypass Right Brachial Artery to Low Arm Vein, Open Approach",false,false,true
+27,Andalax,"Revision of Autol Sub in L Acetabulum, Extern Approach",true,false,false
+28,Span,"Excision of Left Lower Leg, Open Approach",true,true,false
+29,Zamit,Computerized Tomography (CT Scan) of Chest and Abdomen,false,false,false
+30,Voyatouch,"Repair Papillary Muscle, Percutaneous Endoscopic Approach",false,true,true
+31,Overhold,"Fluoroscopy Inf Mesent Art w L Osm Contrast, Laser Intraop",false,false,false
+32,Stim,"Insertion of Ext Fix into L Maxilla, Perc Approach",false,false,true
+33,Bitchip,"Drainage of Left Vocal Cord, Open Approach, Diagnostic",true,true,false
+34,Voyatouch,"Transplantation of L Low Lung Lobe, Allogen, Open Approach",true,true,false
+35,Overhold,"Dilate of R Ant Tib Art with 2 Drug-elut, Perc Endo Approach",true,false,true
+36,Stim,"Drainage of Right Lower Lobe Bronchus, Open Approach",true,false,true
+37,Ventosanzap,ROM/Jt Integrity Assessment of Neuro Body using Oth Equip,false,true,true
+38,Daltfresh,CT Scan of L Hand using H Osm Contrast,false,true,true
+39,Stringtough,"Removal of Synthetic Substitute from Stomach, Via Opening",true,true,false
+40,Prodder,"Supplement Left Knee Tendon with Autol Sub, Open Approach",true,true,false
+41,Tin,"Occlusion of Right Vas Deferens, Perc Endo Approach",true,false,true
+42,Kanlam,"Reattachment of R Shoulder Bursa/Lig, Perc Endo Approach",false,true,false
+43,Bytecard,"Replace L Ext Iliac Vein w Synth Sub, Perc Endo",true,false,true
+44,Lotlux,"Alteration of L Wrist with Nonaut Sub, Perc Endo Approach",false,true,false
+45,Toughjoyfax,"Bypass R Popl Art to Low Ex Art w Autol Art, Perc Endo",false,false,false
+46,Temp,"Bypass 2 Cor Art from R Int Mammary w Nonaut Sub, Open",true,false,true
+47,Cardguard,"Revision of Intraluminal Device in Left Eye, Perc Approach",true,true,true
+48,Temp,"Removal of Autol Sub from Cranial Nrv, Perc Approach",false,false,false
+49,Zoolab,"Replacement of L Ethmoid Bone with Autol Sub, Perc Approach",false,false,false
+50,Zaam-Dox,"Excision of Lumbar Vertebral Disc, Perc Approach, Diagn",false,true,false
+51,Trippledex,"Supplement Pericardium with Zooplastic, Perc Endo Approach",false,false,false
+52,Flowdesk,"Alteration of Left External Ear, Perc Endo Approach",false,false,true
+53,Flexidy,"Bypass 1 Cor Art from L Int Mammary w Synth Sub, Open",false,false,false
+54,Y-find,"Bypass L Great Saphenous to Low Vein, Perc Endo Approach",false,false,true
+55,Hatity,"Dilation of Right Renal Artery, Bifurcation, Perc Approach",true,true,true
+56,Treeflex,"Insertion of Spacer into Left Shoulder Joint, Perc Approach",false,true,false
+57,Greenlam,"Occlusion of Right External Jugular Vein, Open Approach",false,false,false
+58,Stronghold,"Excision of Right Abdomen Muscle, Perc Endo Approach",true,false,false
+59,Tresom,"Revision of Radioact Elem in Cranial Cav, Perc Endo Approach",false,true,false
+60,Veribet,"Drainage of Right Maxilla with Drain Dev, Perc Endo Approach",true,true,true
+61,Mat Lam Tam,"Supplement L Int Mamm Art with Autol Sub, Perc Approach",true,true,true
+62,Tampflex,Transfer Training Treatment using Electrotherap Equipment,false,true,false
+63,Viva,"Removal of Autol Sub from Diaphragm, Via Opening",true,true,false
+64,Stringtough,"Transfuse Nonaut Fibrinogen in Central Art, Open",false,true,false
+65,Toughjoyfax,"Supplement Left Orbit with Nonaut Sub, Open Approach",true,false,false
+66,Mat Lam Tam,"Insertion of Intralum Dev into R Int Mamm Art, Perc Approach",false,true,false
+67,Bitchip,"Transfer Right Hip Muscle with Subcu, Open Approach",true,true,false
+68,Rank,"Revision of Nonaut Sub in Thor Jt, Extern Approach",true,false,true
+69,Aerified,"CT Scan Kidney Transplant w Oth Contrast, Unenh, Enhance",false,true,true
+70,Latlux,"Occlusion R Low Extrem Lymph w Intralum Dev, Perc",true,false,false
+71,Redhold,"Inspection of Lower Muscle, Percutaneous Approach",true,false,false
+72,Y-Solowarm,CT Scan of Bi Submandib Gland using L Osm Contrast,true,true,false
+73,Matsoft,"Drainage of Right Large Intestine with Drainage Device, Endo",false,false,true
+74,Treeflex,"Occlusion of R Innom Vein with Extralum Dev, Perc Approach",true,true,true
+75,Zoolab,"Revision of Int Fix in Nasal Bone, Extern Approach",false,false,false
+76,Bamity,"Repair Hepatobil & Pancr in POC with Oth Dev, Via Opening",true,true,true
+77,Andalax,"Excision of Left Vertebral Vein, Perc Endo Approach",true,false,true
+78,Trippledex,"Bypass Right Kidney Pelvis to Cutaneous, Perc Endo Approach",false,true,false
+79,Vagram,"Bypass R Pulm Art from Carotid w Zooplastic, Perc Endo",true,true,false
+80,Job,"Remove Monitor Dev from Trunk Subcu/Fascia, Extern",false,false,true
+81,Fix San,"Dilate of R Temporal Art with 3 Intralum Dev, Open Approach",true,false,false
+82,Treeflex,"Occlusion of Left Atrial Appendage, Perc Endo Approach",false,false,true
+83,Temp,"Revision of Ext Fix in L Low Femur, Perc Approach",false,true,false
+84,Alpha,"Dilate L Int Iliac Art, Bifurc, w 3 Drug-elut, Perc Endo",false,true,false
+85,Transcof,"Occlusion of Ampulla of Vater, Perc Endo Approach",true,false,true
+86,Temp,"Supplement Innominate Artery with Autol Sub, Open Approach",true,false,false
+87,Greenlam,"Excision of Tongue, External Approach, Diagnostic",true,true,false
+88,Lotstring,"Revision of Autol Sub in Coccygeal Jt, Perc Approach",false,false,false
+89,Lotlux,"Excision of Right Tympanic Membrane, Endo",true,true,false
+90,Bamity,"Resection of Right Trunk Tendon, Open Approach",true,false,false
+91,Transcof,"Drainage of Right Glenoid Cavity, Percutaneous Approach",false,true,true
+92,Matsoft,"Nuclear Medicine, Central Nervous Sys, Tomo Nucl Med Imag",false,false,true
+93,Prodder,"Reattachment of R Wrist Bursa/Lig, Open Approach",false,true,true
+94,Viva,"Revision of Autologous Tissue Substitute in Urethra, Endo",true,true,false
+95,Job,"Resection of Ascending Colon, Endo",false,false,true
+96,Duobam,"Fusion of Left Metacarpocarpal Joint, Open Approach",true,false,false
+97,Flowdesk,"Excision of Left Ear Skin, External Approach, Diagnostic",false,true,false
+98,Sub-Ex,"Drainage of Coccygeal Joint with Drain Dev, Perc Approach",false,false,true
+99,Stim,"Drainage of L Verteb Vein with Drain Dev, Perc Endo Approach",false,true,false
+100,Daltfresh,"Occlusion of Ileum with Extralum Dev, Perc Endo Approach",true,true,true

@@ -1,4 +1,4 @@
-use chrono::NaiveDateTime;
+use chrono::{DateTime, Local, NaiveDateTime};
 use serde::{Deserialize, Serialize};
 
 // For sqlx
@@ -6,13 +6,13 @@ use serde::{Deserialize, Serialize};
 pub struct UserModel {
     pub uid: String,
     pub user_role: String,
-    pub name_last: String,
     pub name_first: String,
+    pub name_last: String,
     pub email: String,
     pub phone: String,
     pub region: String,
     pub realm_id: String,
-    pub created_at: NaiveDateTime,
+    pub created_at: DateTime<Local>,
 }
 
 // For json response

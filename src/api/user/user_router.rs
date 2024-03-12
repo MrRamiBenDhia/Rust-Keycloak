@@ -17,7 +17,6 @@ use crate::{
 
 pub fn create_router(app_state: Arc<AppState>) -> Router {
     Router::new()
-        // .route("/healthcheck", get(health_check_handler))
         .route("/", post(create_user_handler))
         .route("/", get(user_list_handler))
         .route(

@@ -4,10 +4,12 @@ use axum::{
     http::StatusCode,
     response::IntoResponse,
 };
+use chrono::Local;
+use uuid::Timestamp;
 // mod csv_manager;
 
 use crate::{
-    api::user::{user_model::UserModelResponseMessedUp, user_schema::{CreateUserSchema, UpdateUserSchema}}, csv::csv_manager::csv_manager::csv_read, AppState
+    api::user::{user_model::UserModelResponseMessedUp, user_schema::{CreateUserSchema, UpdateUserSchema}}, AppState
 };
 
 use serde_json::json;
@@ -50,10 +52,11 @@ pub async fn create_user_handler(
     State(data): State<Arc<AppState>>,
     Json(body): Json<CreateUserSchema>,
 ) -> Result<impl IntoResponse, (StatusCode, Json<serde_json::Value>)> {
+    let timestamp: chrono::prelude::DateTime<Local> = Local::now();
     // Insert user into the database
     let query_result = sqlx::query(r#"
-        INSERT INTO users (name_last, name_first, email, phone, region, realm_id)
-        VALUES (?, ?, ?, ?, ?, ?)
+        INSERT INTO user (name_last, name_first, email, phone, region, realm_id , created_at, updated_at)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
     "#)
     .bind(body.name_last.to_string())
     .bind(body.name_first.to_string())
@@ -61,6 +64,8 @@ pub async fn create_user_handler(
     .bind(body.phone.to_string())
     .bind(body.region.to_string())
     .bind(body.realm_id.clone())
+    .bind(timestamp)
+    .bind(timestamp)
     .execute(&data.db)
     .await;
 
@@ -192,14 +197,16 @@ pub async fn edit_user_handler(
         }
     };
 
+    let timestamp: chrono::prelude::DateTime<Local> = Local::now();
     // Update user in the database based on the provided ID
-    let update_result = sqlx::query(r#"UPDATE users SET name_last = ?, name_first = ?, email = ?, phone = ?, region = ?, realm_id = ? WHERE id = ?"#)
+    let update_result = sqlx::query(r#"UPDATE user SET name_last = ?, name_first = ?, email = ?, phone = ?, region = ?, realm_id = ?, updated_at = ? WHERE uid = ?"#)
         .bind(body.name_last.clone().unwrap_or(user.name_last.unwrap_or_else(|| {"null".to_owned()})))
         .bind(body.name_first.clone().unwrap_or(user.name_first.unwrap_or_else(|| {"null".to_owned()})))
         .bind(body.email.clone().unwrap_or(user.email.unwrap_or_else(|| {"null".to_owned()})))
         .bind(body.phone.clone().unwrap_or(user.phone.unwrap_or_else(|| {"null".to_owned()})))
         .bind(body.region.clone().unwrap_or(user.region.unwrap_or_else(|| {"null".to_owned()})))
         .bind(body.realm_id.clone().unwrap_or(user.realm_id.unwrap_or_else(|| {0}).to_string()))
+        .bind(timestamp)
         .bind(uid.to_string())
         .execute(&data.db)
         .await
@@ -217,7 +224,7 @@ pub async fn edit_user_handler(
     if update_result.rows_affected() == 0 {
         let error_response = serde_json::json!({
             "status": "fail",
-            "message": format!("User with ID: {} not found", uid),
+            "message": format!("User with UID: {} not found", uid),
         });
         return Err((StatusCode::NOT_FOUND, Json(error_response)));
     }
@@ -255,7 +262,7 @@ pub async fn delete_user_handler(
     State(data): State<Arc<AppState>>,
 ) -> Result<impl IntoResponse, (StatusCode, Json<serde_json::Value>)> {
     // Delete user from the database based on the provided ID
-    let delete_result = sqlx::query(r#"DELETE FROM users WHERE uid = ?"#)
+    let delete_result = sqlx::query(r#"DELETE FROM user WHERE uid = ?"#)
         .bind(id.to_string())
         .execute(&data.db)
         .await
@@ -273,14 +280,14 @@ pub async fn delete_user_handler(
     if delete_result.rows_affected() == 0 {
         let error_response = serde_json::json!({
             "status": "fail",
-            "message": format!("User with ID: {} not found", id),
+            "message": format!("User with UID: {} not found", id),
         });
         return Err((StatusCode::NOT_FOUND, Json(error_response)));
     }
 
     let json_response = serde_json::json!({
         "status": "success",
-        "message": format!("User with ID: {} deleted successfully", id),
+        "message": format!("User with UID: {} deleted successfully", id),
     });
 
     Ok(Json(json_response))
@@ -296,7 +303,7 @@ fn to_user_response(user: &UserModel) -> UserModelResponse {
         phone: user.phone.clone(),
         region: user.region.clone(),
         realm_id: user.realm_id.clone(),
-        created_at: user.created_at.clone(),
+        created_at: user.created_at.naive_local(),
     }
 }
 
