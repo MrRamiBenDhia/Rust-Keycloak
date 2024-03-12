@@ -3,7 +3,7 @@
 use std::sync::Arc;
 
 use axum::{
-    routing::{delete, get, patch, post},
+    routing::{get, post},
     Router,
 };
 

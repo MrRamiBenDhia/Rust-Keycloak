@@ -1,11 +1,11 @@
 pub mod csv_manager {
 
-    use crate::api::user::user_model::{self, UserModel};
+    use crate::api::user::user_model::{UserModel};
     use std::error::Error;
     use std::fs::File;
-    use std::io::{self, Read};
+    use std::io::{self};
     use std::path::{Path, PathBuf};
-    use std::ptr::null;
+    
 
     pub fn csv_read<P: AsRef<Path>>(filename: P) -> Result<Vec<Vec<String>>, Box<dyn Error>> {
         let path = PathBuf::from(filename.as_ref());

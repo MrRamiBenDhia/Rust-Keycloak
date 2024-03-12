@@ -17,7 +17,7 @@ use super::user_model::UserModel;
 
 // User handlers...
 
-pub async fn user_list_handler(State(data): State<Arc<AppState>>) -> Result<impl IntoResponse, (StatusCode, Json<serde_json::Value>)> {
+pub async fn user_list_handler(State(_data): State<Arc<AppState>>) -> Result<impl IntoResponse, (StatusCode, Json<serde_json::Value>)> {
     // Retrieve users from the database and convert to UserModelResponse
     // Implement the SQL query and retrieval logic here...
 
@@ -49,7 +49,7 @@ pub async fn user_list_handler(State(data): State<Arc<AppState>>) -> Result<impl
 }
 
 pub async fn create_user_handler(
-    State(data): State<Arc<AppState>>,
+    State(_data): State<Arc<AppState>>,
     Json(body): Json<CreateUserSchema>,
 ) -> Result<impl IntoResponse, (StatusCode, Json<serde_json::Value>)> {
     // Insert user into the database
@@ -79,7 +79,7 @@ pub async fn create_user_handler(
 
 pub async fn get_user_handler(
     Path(uid): Path<String>,
-    State(data): State<Arc<AppState>>,
+    State(_data): State<Arc<AppState>>,
 ) -> Result<impl IntoResponse, (StatusCode, Json<serde_json::Value>)> {
     // Retrieve user from the database based on the provided UID
     // Implement the SQL query and retrieval logic here...
@@ -136,7 +136,7 @@ pub async fn edit_user_handler(
 
 pub async fn delete_user_handler(
     Path(uid): Path<String>,
-    State(data): State<Arc<AppState>>,
+    State(_data): State<Arc<AppState>>,
 ) -> Result<impl IntoResponse, (StatusCode, Json<serde_json::Value>)> {
     // Delete user from the database based on the provided UID
     // Implement the SQL delete logic here...

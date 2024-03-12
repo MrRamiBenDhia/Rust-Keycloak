@@ -9,7 +9,7 @@ use axum::{
 };
 
 use crate::{
-    api::realm::realm_model::{RealmModel, RealmModelResponse},
+    api::realm::realm_model::{RealmModelResponse},
     AppState,
 };
 
