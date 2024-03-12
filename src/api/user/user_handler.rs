@@ -29,11 +29,12 @@ pub async fn user_list_handler(State(data): State<Arc<AppState>>) -> Result<impl
     match csv_read("misc/MOCK_DATA.csv") {
         Ok(records) => {
             temp = records.clone();
-            for record in records {
-                println!("{:?}", record);
-            }
+            // for record in records {
+            //     println!("{:?}", record);
+            // }
         }
         Err(err) => {
+         
             eprintln!("Error: {:?}", err);
         }
     }
@@ -41,7 +42,7 @@ pub async fn user_list_handler(State(data): State<Arc<AppState>>) -> Result<impl
     let json_response = serde_json::json!({
         "status": "okyyyyyy",
         "users": users,
-        "temp": temp,
+        "temp": temp[1],
     });
 
     Ok(Json(json_response))
@@ -106,7 +107,7 @@ pub async fn get_user_handler(
 
 pub async fn edit_user_handler(
     Path(uid): Path<String>,
-    State(data): State<Arc<AppState>>,
+    State(_data): State<Arc<AppState>>,
     Json(body): Json<UpdateUserSchema>,
 ) -> Result<impl IntoResponse, (StatusCode, Json<serde_json::Value>)> {
     // Update user in the database based on the provided UID

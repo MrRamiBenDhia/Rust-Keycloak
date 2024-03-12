@@ -1,7 +1,7 @@
 pub mod api {
     pub(crate) mod user {
         mod user_handler;
-        mod user_model;
+        pub(crate) mod user_model;
         pub(crate) mod user_router;
         mod user_schema;
     }
