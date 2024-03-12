@@ -26,7 +26,7 @@ pub mod csv_manager {
             let record_values: Vec<String> = record.iter().map(|field| field.to_string()).collect();
             records.push(record_values);
         }
-          csv_deserialize();
+          let _ = csv_deserialize();
         Ok(records)
     }
 

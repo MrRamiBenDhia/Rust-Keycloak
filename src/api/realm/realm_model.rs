@@ -11,6 +11,14 @@ pub struct RealmModel {
     pub verify_email: bool,
     pub remember_me: bool,
 }
+pub struct RealmModelMessedUp {
+    pub id: i64,
+    pub name: Option<String>,
+    pub description:  Option<String>,
+    pub enabled: u8,
+    pub verify_email: u8,
+    pub remember_me: u8,
+}
 
 // For json response
 #[derive(Debug, Deserialize, Serialize)]
