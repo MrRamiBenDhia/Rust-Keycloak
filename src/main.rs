@@ -15,11 +15,16 @@ pub mod api {
 }
 
 pub mod tools {
-pub mod csv {
-    pub mod csv_handler;
-    pub(crate) mod csv_manager;
-    pub mod csv_router;
-}
+    pub mod jwt {
+        pub mod jwt_router;
+        pub mod jwt_sign_verify;
+        pub mod jwt_handler;
+    }
+    pub mod csv {
+        pub mod csv_handler;
+        pub(crate) mod csv_manager;
+        pub mod csv_router;
+    }
 }
 
 use std::sync::Arc;
@@ -39,7 +44,7 @@ use api::{
 
 use tower_http::cors::{Any, CorsLayer};
 
-use crate::tools::csv::csv_router::create_csv_router;
+use crate::tools::{csv::csv_router::create_csv_router, jwt::jwt_router::create_jwt_router};
 
 pub struct AppState {
     db: MySqlPool,
@@ -81,10 +86,11 @@ async fn main() {
         create_realm_router(Arc::new(AppState { db: pool.clone() })).layer(cors.clone());
     let user_router =
         create_user_router(Arc::new(AppState { db: pool.clone() })).layer(cors.clone());
-    let csv_router = 
-        create_csv_router(Arc::new(AppState { db: pool.clone() })).layer(cors.clone());
+    let csv_router = create_csv_router(Arc::new(AppState { db: pool.clone() })).layer(cors.clone());
+    let jwt_router = create_jwt_router(Arc::new(AppState { db: pool.clone() })).layer(cors.clone());
 
     let app = axum::Router::new()
+    .nest("/jwt", jwt_router)
         .nest("/csv", csv_router)
         .nest("/realm", realm_router)
         .nest("/user", user_router);
