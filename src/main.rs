@@ -14,10 +14,12 @@ pub mod api {
     }
 }
 
+pub mod tools {
 pub mod csv {
     pub mod csv_handler;
     pub(crate) mod csv_manager;
     pub mod csv_router;
+}
 }
 
 use std::sync::Arc;
@@ -37,7 +39,7 @@ use api::{
 
 use tower_http::cors::{Any, CorsLayer};
 
-use crate::csv::csv_router::create_csv_router;
+use crate::tools::csv::csv_router::create_csv_router;
 
 pub struct AppState {
     db: MySqlPool,

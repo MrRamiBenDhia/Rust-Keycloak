@@ -7,17 +7,19 @@ use std::sync::Arc;
 use tokio::sync::Mutex;
 
 use super::csv_manager::{
-    csv_deserialize, csv_read, csv_write, delete_csv,
+    csv_deserialize, csv_read, csv_write, delete_csv,csv_my_custom_deserialize
 };
 use crate::{
-    api::user::user_model::{UserModel, UserModelResponse, UserModelResponseMessedUp}, csv::csv_manager::csv_my_custom_deserialize, AppState
+    api::user::user_model::{UserModel, UserModelResponse, UserModelResponseMessedUp}, AppState
 };
+
 pub async fn create_new_users_from_csv(
     // Path(filename): Path<String>,
     State(app_state): State<Arc<AppState>>,
 ) -> Result<impl IntoResponse, (StatusCode, Json<serde_json::Value>)> {
+    let start_time = std::time::Instant::now(); // Start measuring time
 
-    //! bismilah !
+    ///! bismilah !
     
     // Read CSV file
     let csv_data = match csv_my_custom_deserialize("misc/Rust_User_3.csv") {
@@ -29,20 +31,29 @@ pub async fn create_new_users_from_csv(
     // Call function to insert users into database
     match post_users_request(&csv_data, &app_state).await {
         Ok(_) => {
+            let elapsed_time = start_time.elapsed(); // Measure elapsed time
+            let elapsed_millis = elapsed_time.as_millis(); // Convert elapsed time to milliseconds
+            println!("Function executed in {} milliseconds", elapsed_millis);
+
             let response = serde_json::json!({
                 "status": "success",
                 "message": "Users created successfully from CSV",
-                "result": csv_data
+                "count": csv_data.len(),
+                "result": csv_data,
+                "elapsed_time": elapsed_millis, // Add elapsed time to response
             });
             Ok((StatusCode::OK, Json(response)))
         }
         Err(err) => {
+            let elapsed_time = start_time.elapsed(); // Measure elapsed time
+            let elapsed_millis = elapsed_time.as_millis(); // Convert elapsed time to milliseconds
+            println!("Function executed in {} milliseconds", elapsed_millis);
+
             let error_message = format!("Error returned from database: {:?}", err);
-            return Err((StatusCode::INTERNAL_SERVER_ERROR, Json(json!({ "error": error_message }))));
+            return Err((StatusCode::INTERNAL_SERVER_ERROR, Json(json!({ "error": error_message, "elapsed_time": elapsed_millis }))));
         }
     }
 }
-
  pub async fn user_list_to_csv(
     // Path(filename): Path<String>,
     State(app_state): State<Arc<AppState>>,
@@ -97,37 +108,35 @@ pub async fn create_new_users_from_csv(
     Ok((StatusCode::OK, Json(response)))
 }
 
-pub async fn delete_users_from_csv(
-    // Path(filename): Path<String>,
-    State(app_state): State<Arc<AppState>>,
-) -> Result<impl IntoResponse, (StatusCode, Json<serde_json::Value>)> {
+pub async fn delete_users_except(
+        // Json(body): Json<DeleteUsersRequest>,
+        State(data): State<Arc<AppState>>,
+    ) -> Result<impl IntoResponse, (StatusCode, Json<serde_json::Value>)> {
+        // Call the function to delete users except for specified IDs
 
-    // Delete CSV file
-    // delete_csv(&filename)?;
-
-    let response = serde_json::json!({
-        "status": "success",
-        "message": "CSV file deleted successfully",
-    });
-
-    Ok((StatusCode::OK, Json(response)))
-}
+        let keep_these:Vec<String> = vec!["1".to_string(),"2".to_string(),"3".to_string()];
 
 
-fn to_user_response(user: &UserModel) -> UserModelResponse {
-    UserModelResponse {
-        uid: user.uid.clone(),
-        user_role: user.user_role.clone(),
-        name_last: user.name_last.clone(),
-        name_first: user.name_first.clone(),
-        email: user.email.clone(),
-        phone: user.phone.clone(),
-        region: user.region.clone(),
-        realm_id: user.realm_id.clone(),
-        created_at: user.created_at.naive_local(),
+        match delete_users_except_ids(keep_these, &data).await {
+            Ok(_) => {
+                // Return a success response
+                let response = serde_json::json!({
+                    "status": "success",
+                    "message": "Users deleted successfully except for specified IDs",
+                });
+                Ok((StatusCode::OK, Json(response)))
+            }
+            Err(err) => {
+                // Return an error response if deletion fails
+                let error_message = format!("Error deleting users: {:?}", err);
+                Err((StatusCode::INTERNAL_SERVER_ERROR, Json(json!({ "error": error_message }))))
+            }
+        }
     }
-}
+    
 
+
+//? My functions
 pub async fn post_users_request(users: &[UserModel], data: &Arc<AppState>) -> Result<(), (StatusCode, Json<serde_json::Value>)> {
     let timestamp: chrono::DateTime<chrono::Local> = chrono::Local::now();
     let formatted_timestamp = timestamp.format("%Y-%m-%d %H:%M:%S").to_string(); // Format timestamp
@@ -153,6 +162,22 @@ pub async fn post_users_request(users: &[UserModel], data: &Arc<AppState>) -> Re
             return Err((StatusCode::INTERNAL_SERVER_ERROR, Json(json!({ "error": error_message }))));
         }
     }
+
+    Ok(())
+}
+
+pub async fn delete_users_except_ids(ids_to_keep: Vec<String>, app_state: &Arc<AppState>) -> Result<(), sqlx::Error> {
+    // Create a comma-separated string of IDs to keep for the SQL query
+    let ids_to_keep_str = ids_to_keep.join(",");
+
+    // Build and execute the SQL query to delete users except for the specified IDs
+    let query = format!(
+        "DELETE FROM user WHERE uid NOT IN ({})",
+        ids_to_keep_str
+    );
+
+    // Execute the query
+    sqlx::query(&query).execute(&app_state.db).await?;
 
     Ok(())
 }
