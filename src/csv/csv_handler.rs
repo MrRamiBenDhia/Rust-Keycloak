@@ -2,6 +2,7 @@ use axum::{
     extract::{Json, Path, Query, State}, http::{Response, StatusCode}, response::IntoResponse, routing::post, Router
 };
 use chrono::{Local, NaiveDateTime};
+use serde_json::json;
 use std::sync::Arc;
 use tokio::sync::Mutex;
 
@@ -9,8 +10,7 @@ use super::csv_manager::{
     csv_deserialize, csv_read, csv_write, delete_csv,
 };
 use crate::{
-    api::user::user_model::UserModel,
-    AppState,
+    api::user::user_model::{UserModel, UserModelResponse, UserModelResponseMessedUp}, csv::csv_manager::csv_my_custom_deserialize, AppState
 };
 pub async fn create_new_users_from_csv(
     // Path(filename): Path<String>,
@@ -20,56 +20,27 @@ pub async fn create_new_users_from_csv(
     //! bismilah !
     
     // Read CSV file
-    // let csv_data = csv_read(&filename)?;
-    // let _csv_data_result = csv_read("misc/MOCK_DATA.csv");
-    let _result_vec = csv_deserialize("misc/Rust_User_3.csv");
+    let csv_data = match csv_my_custom_deserialize("misc/Rust_User_3.csv") {
+        Ok(data) => data,
+        Err(err) => return Err((StatusCode::INTERNAL_SERVER_ERROR, Json(json!({ "error": err.to_string() }))))
+    };
 
 
-
-
-
-
-
-
-
-
-
-    println!("Result: {:?}",_result_vec);
-    // let csv_data = match csv_data_result {
-    //     Ok(data) => data,
-    //     Err(err) => {
-    //         // Handle the error (e.g., log it or return an error response)
-    //         let error_response: (StatusCode, Json<serde_json::Value>) = map_csv_error_to_response(err, StatusCode::BAD_REQUEST);
-    //         return Err(error_response);
-    //     }
-    //     };
-
-
-    // // Process CSV data and insert into the database (add your logic here)
-    // let users: Vec<UserModel> = csv_data
-    //     .iter()
-    //     .map(|record| {
-    //         // Convert CSV record to UserModel (add your conversion logic here)
-    //         // UserModel {
-    //         //     uid: record[0].clone(),
-    //         //     user_role: record[1].clone(),
-    //         //     name_last: record[2].clone(),
-    //         //     name_first: record[3].clone(),
-    //         //     email: record[4].clone(),
-    //         //     phone: record[5].clone(),
-    //         //     region: record[6].clone(),
-    //         //     realm_id: record[7].clone(),
-    //         //     // created_at: record[8].clone(),
-    //         // }
-    //     })
-    //     .collect();
-
-    let response = serde_json::json!({
-        "status": "success",
-        "message": "Users created successfully from CSV",
-    });
-
-    Ok((StatusCode::OK, Json(response)))
+    // Call function to insert users into database
+    match post_users_request(&csv_data, &app_state).await {
+        Ok(_) => {
+            let response = serde_json::json!({
+                "status": "success",
+                "message": "Users created successfully from CSV",
+                "result": csv_data
+            });
+            Ok((StatusCode::OK, Json(response)))
+        }
+        Err(err) => {
+            let error_message = format!("Error returned from database: {:?}", err);
+            return Err((StatusCode::INTERNAL_SERVER_ERROR, Json(json!({ "error": error_message }))));
+        }
+    }
 }
 
  pub async fn user_list_to_csv(
@@ -140,4 +111,48 @@ pub async fn delete_users_from_csv(
     });
 
     Ok((StatusCode::OK, Json(response)))
+}
+
+
+fn to_user_response(user: &UserModel) -> UserModelResponse {
+    UserModelResponse {
+        uid: user.uid.clone(),
+        user_role: user.user_role.clone(),
+        name_last: user.name_last.clone(),
+        name_first: user.name_first.clone(),
+        email: user.email.clone(),
+        phone: user.phone.clone(),
+        region: user.region.clone(),
+        realm_id: user.realm_id.clone(),
+        created_at: user.created_at.naive_local(),
+    }
+}
+
+pub async fn post_users_request(users: &[UserModel], data: &Arc<AppState>) -> Result<(), (StatusCode, Json<serde_json::Value>)> {
+    let timestamp: chrono::DateTime<chrono::Local> = chrono::Local::now();
+    let formatted_timestamp = timestamp.format("%Y-%m-%d %H:%M:%S").to_string(); // Format timestamp
+
+    for user in users {
+        let query_result = sqlx::query(r#"
+            INSERT INTO user (name_last, name_first, email, phone, region, realm_id, created_at, updated_at)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+        "#)
+        .bind(&user.name_last)
+        .bind(&user.name_first)
+        .bind(&user.email)
+        .bind(&user.phone)
+        .bind(&user.region)
+        .bind(&user.realm_id)
+        .bind(&formatted_timestamp) // Bind formatted timestamp
+        .bind(&formatted_timestamp) // Bind formatted timestamp
+        .execute(&data.db)
+        .await;
+
+        if let Err(err) = query_result {
+            let error_message = format!("Error returned from database: {:?}", err);
+            return Err((StatusCode::INTERNAL_SERVER_ERROR, Json(json!({ "error": error_message }))));
+        }
+    }
+
+    Ok(())
 }

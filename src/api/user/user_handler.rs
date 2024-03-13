@@ -54,20 +54,7 @@ pub async fn create_user_handler(
 ) -> Result<impl IntoResponse, (StatusCode, Json<serde_json::Value>)> {
     let timestamp: chrono::prelude::DateTime<Local> = Local::now();
     // Insert user into the database
-    let query_result = sqlx::query(r#"
-        INSERT INTO user (name_last, name_first, email, phone, region, realm_id , created_at, updated_at)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-    "#)
-    .bind(body.name_last.to_string())
-    .bind(body.name_first.to_string())
-    .bind(body.email.to_string())
-    .bind(body.phone.to_string())
-    .bind(body.region.to_string())
-    .bind(body.realm_id.clone())
-    .bind(timestamp)
-    .bind(timestamp)
-    .execute(&data.db)
-    .await;
+    let query_result = post_user_request(&body, timestamp, &data).await;
 
     // Check for duplicate entry error
     if let Err(err) = &query_result {
@@ -116,6 +103,24 @@ pub async fn create_user_handler(
     });
 
     Ok(Json(user_response))
+}
+
+pub async fn post_user_request(body: &CreateUserSchema, timestamp: chrono::prelude::DateTime<Local>, data: &Arc<AppState>) -> Result<sqlx::mysql::MySqlQueryResult, sqlx::Error> {
+    let query_result = sqlx::query(r#"
+        INSERT INTO user (name_last, name_first, email, phone, region, realm_id , created_at, updated_at)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    "#)
+    .bind(body.name_last.to_string())
+    .bind(body.name_first.to_string())
+    .bind(body.email.to_string())
+    .bind(body.phone.to_string())
+    .bind(body.region.to_string())
+    .bind(body.realm_id.clone())
+    .bind(timestamp)
+    .bind(timestamp)
+    .execute(&data.db)
+    .await;
+    query_result
 }
 
 pub async fn get_user_handler(
@@ -307,7 +312,7 @@ fn to_user_response(user: &UserModel) -> UserModelResponse {
     }
 }
 
-fn to_user_response_messedup(user: &UserModelResponseMessedUp) -> UserModelResponse {
+pub fn to_user_response_messedup(user: &UserModelResponseMessedUp) -> UserModelResponse {
     UserModelResponse {
         uid: user.uid.to_string(),
         user_role: user.user_role.clone().unwrap_or_else(|| {"null".to_owned()}),
