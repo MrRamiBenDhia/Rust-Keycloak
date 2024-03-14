@@ -32,6 +32,11 @@ pub mod logic {
         pub mod fibonacci_router;
         pub mod fibonacci_seq;
     }
+    pub mod prime {
+        pub mod prime_handler;
+        pub mod prime_router;
+        pub mod prime_seq;
+    }
 }
 
 use std::sync::Arc;
@@ -52,7 +57,10 @@ use api::{
 use tower_http::cors::{Any, CorsLayer};
 
 use crate::tools::{csv::csv_router::create_csv_router, jwt::jwt_router::create_jwt_router};
-use crate::logic::{fibonacci::fibonacci_router::create_router as create_fibonacci_router};
+use crate::logic::{
+    fibonacci::fibonacci_router::create_router as create_fibonacci_router,
+    prime::prime_router::create_router as create_prime_router
+};
 
 pub struct AppState {
     db: MySqlPool,
@@ -97,12 +105,14 @@ async fn main() {
     let csv_router = create_csv_router(Arc::new(AppState { db: pool.clone() })).layer(cors.clone());
     let jwt_router = create_jwt_router(Arc::new(AppState { db: pool.clone() })).layer(cors.clone());
     let fibonacci_router = create_fibonacci_router(Arc::new(AppState { db: pool.clone() })).layer(cors.clone());
+    let prime_router = create_prime_router(Arc::new(AppState { db: pool.clone() })).layer(cors.clone());
 
     let app = axum::Router::new()
     .nest("/jwt", jwt_router)
         .nest("/csv", csv_router)
         .nest("/realm", realm_router)
         .nest("/fibonacci", fibonacci_router)
+        .nest("/prime", prime_router)
         .nest("/user", user_router);
     // .layer(cors);
 
