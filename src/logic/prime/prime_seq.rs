@@ -12,7 +12,6 @@ pub fn nth_prime(n: u32) -> Vec<u32> {
 
     let mut result = Vec::new();
     let mut index = 2;
-    let max = 1000;
 
     loop {
         if is_prime(index) {
@@ -20,7 +19,7 @@ pub fn nth_prime(n: u32) -> Vec<u32> {
             counter -= 1;
         }
 
-        if counter == 0 || index > max {
+        if counter == 0 {
             break;
         }
         index += 1;
@@ -29,21 +28,25 @@ pub fn nth_prime(n: u32) -> Vec<u32> {
 }
 
 fn main() {
-    let n: u32 = 100;
-
+    let start_time = std::time::Instant::now(); // Start measuring time
     
     println!("Welcome to Prime Numbers");
-    println!("Input nth number: ", );
+    // println!("Input nth number: ", );
     
-    let mut line = String::new();
-    let _read = std::io::stdin().read_line(&mut line).unwrap();
+    // let mut line = String::new();
+    // let _read = std::io::stdin().read_line(&mut line).unwrap();
     
-    let x: u32 = line.trim().parse::<u32>().unwrap();
+    // let x: u32 = line.trim().parse::<u32>().unwrap();
     
-    let result = nth_prime(x);
+    let result = nth_prime(100);
 
     // println!("Input in: {}", line);
     println!("Result = {:?}", result);
+
+    let elapsed_time = start_time.elapsed(); // Measure elapsed time
+    let elapsed_millis = elapsed_time.as_millis(); // Convert elapsed time to milliseconds
+    println!("Function executed in {} milliseconds", elapsed_millis);
+
     println!("Click Enter to close this window...");
     std::io::stdin().read_line(&mut String::new()).unwrap();
 }

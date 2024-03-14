@@ -52,6 +52,7 @@ use api::{
 use tower_http::cors::{Any, CorsLayer};
 
 use crate::tools::{csv::csv_router::create_csv_router, jwt::jwt_router::create_jwt_router};
+use crate::logic::{fibonacci::fibonacci_router::create_router as create_fibonacci_router};
 
 pub struct AppState {
     db: MySqlPool,
@@ -95,11 +96,13 @@ async fn main() {
         create_user_router(Arc::new(AppState { db: pool.clone() })).layer(cors.clone());
     let csv_router = create_csv_router(Arc::new(AppState { db: pool.clone() })).layer(cors.clone());
     let jwt_router = create_jwt_router(Arc::new(AppState { db: pool.clone() })).layer(cors.clone());
+    let fibonacci_router = create_fibonacci_router(Arc::new(AppState { db: pool.clone() })).layer(cors.clone());
 
     let app = axum::Router::new()
     .nest("/jwt", jwt_router)
         .nest("/csv", csv_router)
         .nest("/realm", realm_router)
+        .nest("/fibonacci", fibonacci_router)
         .nest("/user", user_router);
     // .layer(cors);
 
