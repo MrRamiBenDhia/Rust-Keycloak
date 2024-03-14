@@ -18,12 +18,19 @@ pub mod tools {
     pub mod jwt {
         pub mod jwt_router;
         pub mod jwt_sign_verify;
-        pub mod jwt_handler;
+        pub  mod jwt_handler;
     }
     pub mod csv {
         pub mod csv_handler;
         pub(crate) mod csv_manager;
         pub mod csv_router;
+    }
+}
+pub mod logic {
+    pub mod fibonacci {
+        pub mod fibonacci_handler;
+        pub mod fibonacci_router;
+        pub mod fibonacci_seq;
     }
 }
 
