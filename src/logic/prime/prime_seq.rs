@@ -29,11 +29,21 @@ pub fn nth_prime(n: u32) -> Vec<u32> {
 }
 
 fn main() {
-    let n = 10;
+    let n: u32 = 100;
 
-    let result = nth_prime(n);
-
+    
     println!("Welcome to Prime Numbers");
-    println!("Input: {}", n);
+    println!("Input nth number: ", );
+    
+    let mut line = String::new();
+    let _read = std::io::stdin().read_line(&mut line).unwrap();
+    
+    let x: u32 = line.trim().parse::<u32>().unwrap();
+    
+    let result = nth_prime(x);
+
+    // println!("Input in: {}", line);
     println!("Result = {:?}", result);
+    println!("Click Enter to close this window...");
+    std::io::stdin().read_line(&mut String::new()).unwrap();
 }
