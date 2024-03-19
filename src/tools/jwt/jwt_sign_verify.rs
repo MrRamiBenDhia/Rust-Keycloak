@@ -33,7 +33,7 @@ pub fn jwt_sign_verify_main() -> Duration {
     // let jwt_secret = env::var("JWT_SECRET").expect("$JWT_SECRET is not set");
     let jwt_encoding_key = EncodingKey::from_secret(jwt_secret.as_bytes());
     let jwt_decoding_key = DecodingKey::from_secret(jwt_secret.as_bytes());
-    let num_iterations = 100_000;
+    let num_iterations = 1_000_000; ///! here change the number of iters
     let mut start_ts = 0;
     let validation = Validation::new(Algorithm::HS256);
 

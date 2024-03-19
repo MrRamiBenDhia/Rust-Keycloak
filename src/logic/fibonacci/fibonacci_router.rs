@@ -7,13 +7,15 @@ use axum::{
 
 use crate::AppState;
 
-use super::fibonacci_handler::get_fibonacci_handler;
-
-
+use super::fibonacci_handler::{get_fibonacci_handler, get_fibonacci_none_recursive_handler};
 
 pub fn create_router(app_state: Arc<AppState>) -> Router {
-
-    Router::new().route("/:number", get(get_fibonacci_handler))
-    .with_state(app_state)
-    
+    Router::new()
+        .route(
+            "/:number",
+            get(get_fibonacci_handler)
+            .post(get_fibonacci_none_recursive_handler),
+        )
+        .route("/nr/:number", get(get_fibonacci_none_recursive_handler))
+        .with_state(app_state)
 }

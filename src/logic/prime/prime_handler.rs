@@ -15,6 +15,8 @@ pub async fn get_prime_handler(
 ) -> Result<impl IntoResponse, (StatusCode, Json<serde_json::Value>)> {
     let n: u32 = number.parse::<u32>().unwrap();
     let start_time = std::time::Instant::now(); // Start measuring time
+
+
     if n > 1_000_000 {
         let error_message =
             format!("Error number limit excided, Try again with numbers less then 1 000 000 ");
@@ -24,17 +26,17 @@ pub async fn get_prime_handler(
             Json(serde_json::json!({ "error": error_message })),
         ));
     }
+    let result = nth_prime(n);
 
     let elapsed_time = start_time.elapsed(); // Measure elapsed time
     let elapsed_millis = elapsed_time.as_millis();
-    let result = nth_prime(n);
 
     let json_response = serde_json::json!({
         "status": "success",
         "data": serde_json::json!({
             "count": result.len(),
             "result": result,
-           "elapsed_time": elapsed_millis,
+           "elapsed_time": elapsed_millis/1000,
         }),
     });
 
