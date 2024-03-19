@@ -117,6 +117,7 @@ async fn main() {
     // .layer(cors);
 
     println!("✅ Server started successfully at 0.0.0.0:8000");
+    println!("😒 WELCOME 😒");
 
     let listener = TcpListener::bind("0.0.0.0:8000").await.unwrap();
     axum::serve(listener, app.into_make_service())

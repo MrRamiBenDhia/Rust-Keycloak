@@ -31,8 +31,8 @@ pub async fn create_new_users_from_csv(
     // Call function to insert users into database
     match post_users_request(&csv_data, &app_state).await {
         Ok(_) => {
-            let elapsed_time = start_time.elapsed(); // Measure elapsed time
-            let elapsed_millis = elapsed_time.as_millis(); // Convert elapsed time to milliseconds
+            let elapsed_time = start_time.elapsed(); 
+            let elapsed_millis = elapsed_time.as_millis(); 
             println!("Function executed in {} milliseconds", elapsed_millis);
 
             let response = serde_json::json!({
@@ -40,13 +40,13 @@ pub async fn create_new_users_from_csv(
                 "message": "Users created successfully from CSV",
                 "count": csv_data.len(),
                 "result": csv_data,
-                "elapsed_time": elapsed_millis, // Add elapsed time to response
+                "elapsed_time": elapsed_millis, 
             });
             Ok((StatusCode::OK, Json(response)))
         }
         Err(err) => {
-            let elapsed_time = start_time.elapsed(); // Measure elapsed time
-            let elapsed_millis = elapsed_time.as_millis(); // Convert elapsed time to milliseconds
+            let elapsed_time = start_time.elapsed(); 
+            let elapsed_millis = elapsed_time.as_millis();
             println!("Function executed in {} milliseconds", elapsed_millis);
 
             let error_message = format!("Error returned from database: {:?}", err);
@@ -58,7 +58,7 @@ pub async fn create_new_users_from_csv(
     // Path(filename): Path<String>,
     State(app_state): State<Arc<AppState>>,
 ) -> Result<impl IntoResponse, (StatusCode, Json<serde_json::Value>)> {
-    // Fetch user data from the database (add your logic here)
+    // Fetch user data from the database (add logic here)
     
     let timestamp: chrono::prelude::DateTime<Local> = Local::now();
 

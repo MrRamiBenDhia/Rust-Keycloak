@@ -1,4 +1,5 @@
 FROM rust:latest
+LABEL authors="rami.bendhia"
 
 WORKDIR /app
 COPY . /app

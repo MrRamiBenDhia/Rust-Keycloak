@@ -1,5 +1,5 @@
 pub fn is_prime(n: u32) -> bool {
-    for i in 2..n {
+    for i in 2..f64::sqrt(n as f64) as u32 {
         if n % i == 0 {
             return false;
         }
@@ -29,22 +29,22 @@ pub fn nth_prime(n: u32) -> Vec<u32> {
 
 fn main() {
     let start_time = std::time::Instant::now(); // Start measuring time
-    
+
     println!("Welcome to Prime Numbers");
-    // println!("Input nth number: ", );
-    
-    // let mut line = String::new();
-    // let _read = std::io::stdin().read_line(&mut line).unwrap();
-    
-    // let x: u32 = line.trim().parse::<u32>().unwrap();
-    
-    let result = nth_prime(100);
+    println!("Input nth number: ",);
+
+    let mut line = String::new();
+    let _read = std::io::stdin().read_line(&mut line).unwrap();
+
+    let x: u32 = line.trim().parse::<u32>().unwrap();
+
+    let result = nth_prime(x);
 
     // println!("Input in: {}", line);
     println!("Result = {:?}", result);
 
-    let elapsed_time = start_time.elapsed(); // Measure elapsed time
-    let elapsed_millis = elapsed_time.as_millis(); // Convert elapsed time to milliseconds
+    let elapsed_time = start_time.elapsed();
+    let elapsed_millis = elapsed_time.as_millis();
     println!("Function executed in {} milliseconds", elapsed_millis);
 
     println!("Click Enter to close this window...");

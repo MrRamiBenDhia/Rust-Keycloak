@@ -6,6 +6,17 @@ pub fn fibonacci_seq(n: u32) -> u64 {
     }
 }
 
+pub fn fibonacci_seq_none_recursive(n: u32) -> Vec<u32> {
+    let index = 1;
+
+    let result = vec![1,1];
+    for index in 1..n {
+        
+    };
+
+    result
+}
+
 fn main() {
     let n = 25;
 
