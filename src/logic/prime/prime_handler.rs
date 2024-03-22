@@ -37,6 +37,7 @@ pub async fn get_prime_handler(
             "count": result.len(),
             "result": result,
            "elapsed_time": elapsed_millis/1000,
+           "elapsed_millis": elapsed_millis,
         }),
     });
 

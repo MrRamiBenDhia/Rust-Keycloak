@@ -1,14 +1,14 @@
 pub fn is_prime(n: u32) -> bool {
-    for i in 2..f64::sqrt(n as f64) as u32 {
+    let limit = (n as f64).sqrt() as u32 + 1;
+    for i in 2..limit {
         if n % i == 0 {
             return false;
         }
     }
-    return true;
+    true
 }
 
 pub fn nth_prime(n: u32) -> Vec<u32> {
-    let mut counter = n;
 
     let mut result = Vec::new();
     let mut index = 2;
@@ -16,10 +16,9 @@ pub fn nth_prime(n: u32) -> Vec<u32> {
     loop {
         if is_prime(index) {
             result.push(index);
-            counter -= 1;
         }
 
-        if counter == 0 {
+        if result.len() >= n.try_into().unwrap() {
             break;
         }
         index += 1;
