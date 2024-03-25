@@ -1,16 +1,16 @@
 use axum::{
-    extract::{Json, Path, Query, State}, http::{Response, StatusCode}, response::IntoResponse, routing::post, Router
+    extract::{Json, Path, State}, http::{StatusCode}, response::IntoResponse
 };
-use chrono::{Local, NaiveDateTime};
+
 use serde_json::json;
 use std::sync::Arc;
-use tokio::sync::Mutex;
+
 
 use super::csv_manager::{
-    csv_deserialize, csv_read, csv_write, delete_csv,csv_my_custom_deserialize
+    csv_my_custom_deserialize
 };
 use crate::{
-    api::user::user_model::{UserModel, UserModelResponse, UserModelResponseMessedUp}, AppState
+    api::user::user_model::{UserModel}, AppState
 };
 
 

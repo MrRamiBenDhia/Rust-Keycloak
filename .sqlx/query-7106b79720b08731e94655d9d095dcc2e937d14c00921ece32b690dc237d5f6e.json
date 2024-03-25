@@ -1,0 +1,12 @@
+{
+  "db_name": "MySQL",
+  "query": "UPDATE realm SET name = ?, description = ?, enabled = ?, verify_email = ?, remember_me = ? WHERE id = ?",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Right": 6
+    },
+    "nullable": []
+  },
+  "hash": "7106b79720b08731e94655d9d095dcc2e937d14c00921ece32b690dc237d5f6e"
+}

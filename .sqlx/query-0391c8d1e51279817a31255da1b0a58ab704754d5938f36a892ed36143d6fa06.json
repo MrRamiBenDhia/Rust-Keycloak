@@ -1,0 +1,12 @@
+{
+  "db_name": "MySQL",
+  "query": "INSERT INTO realm ( name, description, enabled, verify_email, remember_me) VALUES (?, ?, ?, ?, ?)",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Right": 5
+    },
+    "nullable": []
+  },
+  "hash": "0391c8d1e51279817a31255da1b0a58ab704754d5938f36a892ed36143d6fa06"
+}

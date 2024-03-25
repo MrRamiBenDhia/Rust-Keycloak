@@ -20,7 +20,7 @@ pub fn fibonacci_seq_none_recursive(n: u32) -> Vec<u32> {
 }
 
 fn main() {
-    let n = 25;
+    let _n = 25;
 
     println!("Welcome to Fibonacci");
     println!("Input nth number: ",);

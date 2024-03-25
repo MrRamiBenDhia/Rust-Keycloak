@@ -1,12 +1,12 @@
-use std::sync::Arc;
+
 
 use axum::{
-    extract::{Json, Path, State},
+    extract::{Json, Path},
     http::StatusCode,
     response::IntoResponse,
 };
 
-use crate::AppState;
+
 
 use super::prime_seq::nth_prime;
 
@@ -35,7 +35,7 @@ pub async fn get_prime_handler(
         "status": "success",
         "data": serde_json::json!({
             "count": result.len(),
-            "result": result,
+            // "result": result,//! result here if u want to see it
            "elapsed_time": elapsed_millis/1000,
            "elapsed_millis": elapsed_millis,
         }),

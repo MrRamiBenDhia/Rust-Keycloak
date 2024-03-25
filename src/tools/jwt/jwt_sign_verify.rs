@@ -2,9 +2,9 @@ use jsonwebtoken::{decode, encode, Algorithm, DecodingKey, EncodingKey, Header, 
 use serde::{Deserialize, Serialize};
 use std::env;
 use std::error::Error;
-use std::fs;
+
 use std::fs::File;
-use std::io::{BufRead, BufReader};
+
 use std::time::Duration;
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -15,7 +15,7 @@ struct Claims {
 }
 
 pub fn jwt_sign_verify_main(num_iterations:u32) -> Duration {
-    let args: Vec<String> = env::args().collect();
+    let _args: Vec<String> = env::args().collect();
 
 
 

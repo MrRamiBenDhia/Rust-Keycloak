@@ -1,12 +1,12 @@
 
-    use chrono::{DateTime, Local};
+    use chrono::{Local};
 
     use crate::api::user::user_model::UserModel;
     use std::error::Error;
     use std::fs::{remove_file, File};
-    use std::io::{self, Write};
+    use std::io::{Write};
     use std::path::{Path, PathBuf};
-    use std::thread::yield_now;
+    
 
     pub fn csv_read<P: AsRef<Path>>(filename: P) -> Result<Vec<Vec<String>>, Box<dyn Error>> {
         let path = PathBuf::from(filename.as_ref());
@@ -36,7 +36,7 @@
 
         let mut rdr = csv::Reader::from_reader(file);
 
-        let mut list_users: Vec<UserModel> = Vec::new();
+        let list_users: Vec<UserModel> = Vec::new();
 
         for result in rdr.deserialize() {
             // Notice that we need to provide a type hint for automatic deserialization.

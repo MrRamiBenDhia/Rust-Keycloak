@@ -1,12 +1,12 @@
-use std::sync::Arc;
+
 
 use axum::{
-    extract::{Json, Path, State},
+    extract::{Json, Path},
     http::StatusCode,
     response::IntoResponse,
 };
 
-use crate::AppState;
+
 
 use super::fibonacci_seq::{fibonacci_seq,fibonacci_seq_none_recursive};
 pub async fn get_fibonacci_handler(
