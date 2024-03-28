@@ -1,4 +1,4 @@
-pub fn fibonacci_seq(n: u32) -> u64 {
+pub fn fibonacci_seq(n: u32) -> u128 {
     match n {
         0 => 1,
         1 => 1,
@@ -6,13 +6,12 @@ pub fn fibonacci_seq(n: u32) -> u64 {
     }
 }
 
-pub fn fibonacci_seq_none_recursive(n: u32) -> Vec<u32> {
-    let mut result = vec![1, 1];
+pub fn fibonacci_seq_none_recursive(n: u32) -> Vec<u128> {
+    let mut result:Vec<u128> = vec![1, 1];
     let mut count = 1;
 
     while result.len() < n as usize {
-        let next_number = result[count - 1] + result[count];
-        result.push(next_number);
+        result.push(result[count - 1] + result[count]);
         count += 1;
     }
 

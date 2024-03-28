@@ -1,10 +1,19 @@
-FROM rust:latest
+FROM rust:alpine as builder
 
+WORKDIR /app/src
+RUN USER=root
+
+RUN apk add pkgconfig openssl-dev libc-dev
+COPY ./ ./
+RUN cargo build --release
+
+FROM alpine:latest
 WORKDIR /app
-COPY . /app
+RUN apk update \
+    && apk add openssl ca-certificates
 
-# ENV SQLX_OFFLINE true
-# RUN cargo build
-# RUN cargo sqlx prepare > output.txt
-# CMD ["./target/debug/service"]
-CMD ["cargo", "run"]
+EXPOSE 8000
+
+COPY --from=builder /app/src/target/release/my-rust-app /app/my-rust-app 
+
+CMD ["/app/my-rust-app "]

@@ -77,14 +77,17 @@ pub async fn create_new_users_from_csv_with_file_name(
             let elapsed_millis = elapsed_time.as_millis(); 
             println!("Function executed in {} milliseconds", elapsed_millis);
 
-            let response = serde_json::json!({
-                "status": "success",
+            let json_response = serde_json::json!({
                 "message": "Users created successfully from CSV",
+                "status": "success",
                 "count": csv_data.len(),
-                // "result": csv_data,
-                "elapsed_time": elapsed_millis, 
-            });
-            Ok((StatusCode::OK, Json(response)))
+                // "result": result,//! result here if u want to see it
+               "elapsed_time": format!("{:.3} seconds",elapsed_millis as f32 /1000.0),
+               "elapsed_millis": elapsed_millis,
+        });
+    
+        Ok((StatusCode::OK, Json(json_response)))
+        
         }
         Err(err) => {
             let elapsed_time = start_time.elapsed(); 

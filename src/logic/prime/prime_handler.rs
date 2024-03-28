@@ -32,16 +32,16 @@ pub async fn get_prime_handler(
     let elapsed_millis = elapsed_time.as_millis();
 
     let json_response = serde_json::json!({
-        "status": "success",
-        "data": serde_json::json!({
+            "status": "success",
             "count": result.len(),
+            "result": result[result.len() -1],
+
             // "result": result,//! result here if u want to see it
-           "elapsed_time": elapsed_millis/1000,
+           "elapsed_time": format!("{:.3} seconds",elapsed_millis as f32 /1000.0),
            "elapsed_millis": elapsed_millis,
-        }),
     });
 
-    Ok(Json(json_response))
+    Ok((StatusCode::OK, Json(json_response)))
 
     // (StatusCode::INTERNAL_SERVER_ERROR, Json(error_response))
 }
