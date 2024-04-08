@@ -19,8 +19,6 @@ pub async fn create_new_users_from_csv(
     State(app_state): State<Arc<AppState>>,
 ) -> Result<impl IntoResponse, (StatusCode, Json<serde_json::Value>)> {
     let start_time = std::time::Instant::now(); // Start measuring time
-
-    ///! bismilah !
     
     // Read CSV file
     let csv_data = match csv_my_custom_deserialize("misc/Rust_User_3.csv") {

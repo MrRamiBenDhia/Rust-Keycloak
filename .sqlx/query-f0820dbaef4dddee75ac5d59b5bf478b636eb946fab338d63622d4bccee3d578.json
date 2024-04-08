@@ -75,16 +75,6 @@
       },
       {
         "ordinal": 7,
-        "name": "role",
-        "type_info": {
-          "type": "VarString",
-          "flags": "",
-          "char_set": 224,
-          "max_size": 1020
-        }
-      },
-      {
-        "ordinal": 8,
         "name": "updated_at",
         "type_info": {
           "type": "Datetime",
@@ -94,7 +84,7 @@
         }
       },
       {
-        "ordinal": 9,
+        "ordinal": 8,
         "name": "user_role",
         "type_info": {
           "type": "VarString",
@@ -104,7 +94,7 @@
         }
       },
       {
-        "ordinal": 10,
+        "ordinal": 9,
         "name": "realm_id",
         "type_info": {
           "type": "LongLong",
@@ -120,7 +110,6 @@
     "nullable": [
       false,
       false,
-      true,
       true,
       true,
       true,

@@ -26,6 +26,7 @@ pub struct UserModelResponse {
     pub phone: String,
     pub region: String,
     pub realm_id: String,
+    // pub role : String,
     pub created_at: NaiveDateTime,
 }
 
@@ -38,7 +39,7 @@ pub struct UserModelResponseMessedUp {
     pub email: Option<String>,
     pub phone: Option<String>,
     pub region: Option<String>,
-    pub role : Option<String>,
+    // pub role : Option<String>,
     pub realm_id: Option<i64>,
     pub created_at: NaiveDateTime,
     pub updated_at: NaiveDateTime,
