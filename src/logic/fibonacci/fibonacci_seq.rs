@@ -14,7 +14,6 @@ pub fn fibonacci_seq_none_recursive(n: u32) -> Vec<u128> {
         result.push(result[count - 1] + result[count]);
         count += 1;
     }
-
     result
 }
 

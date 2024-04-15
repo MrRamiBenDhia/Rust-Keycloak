@@ -17,9 +17,9 @@ pub async fn get_prime_handler(
     let start_time = std::time::Instant::now(); // Start measuring time
 
 
-    if n > 1_000_000 {
+    if n > 10_000_000 {
         let error_message =
-            format!("Error number limit excided, Try again with numbers less then 1 000 000 ");
+            format!("Error number limit excided, Try again with numbers less then 10 000 000 ");
 
         return Err((
             StatusCode::LOCKED,
